@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <%- include("partials/head.ejs") %>
+  <!-- Bootstrap başlığı ekledik -->
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">Haber Sitesi</a>
+
+        <% if (user) { %>
+        <span class="navbar-text text-white">
+          Merhaba, <%= user.username %> (<%= user.role %>)
+        </span>
+
+        <% if (user && user.role === "admin") { %>
+        <a href="/users" class="btn btn-info mb-3">👤 Kullanıcı Yönetimi</a>
+        <% } %>
+
+        <a href="/auth/logout" class="btn btn-danger btn-sm ms-2">Çıkış Yap</a>
+        <% } else { %>
+        <a href="/auth/login" class="btn btn-primary btn-sm">Giriş Yap</a>
+        <% } %>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <h1 class="mb-4">Haberler</h1>
+
+      <% if (user && (user.role === "admin" || user.role === "writer")) { %>
+      <a href="/news/add" class="btn btn-success mb-3">+ Yeni Haber Ekle</a>
+      <% } %>
+
+      <div class="row">
+        <% news.forEach(function(article) { %>
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title"><%= article.title %></h5>
+              <p class="card-text"><%= article.content %></p>
+              <p class="text-muted">
+                Yazar: <%= article.author ? article.author.username :
+                "Bilinmeyen" %> | Tarih: <%= article.createdAt ?
+                article.createdAt.toLocaleString() : "Bilinmeyen" %>
+              </p>
+
+              <% if (user && (user.role === "admin" || user.role === "writer"))
+              { %>
+              <a
+                href="/news/edit/<%= article._id %>"
+                class="btn btn-warning btn-sm"
+                >Düzenle</a
+              >
+              <% if (user.role === "admin") { %>
+              <a
+                href="/news/delete/<%= article._id %>"
+                class="btn btn-danger btn-sm"
+                >Sil</a
+              >
+              <% } %> <% } %>
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

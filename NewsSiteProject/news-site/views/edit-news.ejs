@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <%- include("partials/head.ejs") %>
+  <body>
+    <div class="container mt-5">
+      <h2>Haberi Düzenle</h2>
+      <form action="/news/edit/<%= news._id %>" method="POST">
+        <div class="mb-3">
+          <label class="form-label">Başlık</label>
+          <input
+            type="text"
+            name="title"
+            class="form-control"
+            value="<%= news.title %>"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">İçerik</label>
+          <textarea name="content" class="form-control" rows="4" required>
+<%= news.content %></textarea
+          >
+        </div>
+        <button type="submit" class="btn btn-warning">Güncelle</button>
+      </form>
+    </div>
+  </body>
+</html>

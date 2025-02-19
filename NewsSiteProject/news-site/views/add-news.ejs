@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <%- include("partials/head.ejs") %>
+  <body>
+    <div class="container mt-5">
+      <h2>Yeni Haber Ekle</h2>
+      <form action="/news/add" method="POST">
+        <div class="mb-3">
+          <label class="form-label">Başlık</label>
+          <input type="text" name="title" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">İçerik</label>
+          <textarea
+            name="content"
+            class="form-control"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Ekle</button>
+      </form>
+    </div>
+  </body>
+</html>
